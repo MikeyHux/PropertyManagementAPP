@@ -4,24 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    tools:layout_editor_absoluteY="25dp">
 
 
     <TextView
         android:id="@+id/txtViewSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/txtViewSettings"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:textColor="@android:color/holo_blue_bright"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="3dp" />
+        app:layout_constraintStart_toStartOf="@+id/btnOwnerProfiles"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnOwnerProfiles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Owner Profiles"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="48dp" />
+        android:layout_marginTop="11dp"
+        android:text="@string/btnOwnerProfiles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewSettings" />
 </android.support.constraint.ConstraintLayout>
