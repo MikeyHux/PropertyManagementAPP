@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 public class OwnerProfilesActivity  extends AppCompatActivity {
 
+    Button btnAddOwnerProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +18,15 @@ public class OwnerProfilesActivity  extends AppCompatActivity {
 
         Toast.makeText(this, "Owner Profiles Activity!",
                 Toast.LENGTH_LONG).show();
+
+        btnAddOwnerProfile = (Button) findViewById(R.id.btnAddOwnerProfile);
+
+        btnAddOwnerProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OwnerProfilesActivity.this, AddUpdateOwnerProfile.class));
+            }
+        });
 
 
     }

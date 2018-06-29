@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
+
+    <TextView
+        android:id="@+id/txtViewOwnerProfile"
+        android:layout_width="199dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:text="OWNER PROFILE"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/txtViewOwnerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="31dp"
+        android:layout_marginStart="6dp"
+        android:text="Name:"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edtOwnerName"
+        app:layout_constraintEnd_toStartOf="@+id/edtOwnerName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edtOwnerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="15dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/edtOwnerAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewOwnerName" />
+
+    <TextView
+        android:id="@+id/txtViewOwnerAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13dp"
+        android:layout_marginStart="6dp"
+        android:text="Address:"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edtOwnerAddress"
+        app:layout_constraintEnd_toStartOf="@+id/edtOwnerAddress"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edtOwnerAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="197dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewOwnerAddress"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewOwnerEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginStart="6dp"
+        android:text="Email:"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtOwnerEmail"
+        app:layout_constraintEnd_toStartOf="@+id/edtOwnerEmail"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edtOwnerEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewOwnerEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtOwnerAddress" />
+
+    <TextView
+        android:id="@+id/txtViewOwnerPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginStart="6dp"
+        android:text="Phone:"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtOwnerPhone"
+        app:layout_constraintEnd_toStartOf="@+id/edtOwnerPhone"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edtOwnerPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewOwnerPhone"
+        app:layout_constraintTop_toBottomOf="@+id/edtOwnerEmail" />
+
+
+    <Button
+        android:id="@+id/btnAddOwner"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="25dp"
+        android:elevation="0dp"
+        android:text="ADD PROFILE"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtOwnerPhone" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="16dp"
+        android:text="CANCEL"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnAddOwner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddOwner" />
+
+
+</android.support.constraint.ConstraintLayout>
