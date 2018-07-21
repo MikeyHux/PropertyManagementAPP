@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, "Main Activity!",
-                Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "Main Activity!", Toast.LENGTH_LONG).show();
         //Declare button
         Button btnSettings = (Button)findViewById(R.id.btnSettings);
 

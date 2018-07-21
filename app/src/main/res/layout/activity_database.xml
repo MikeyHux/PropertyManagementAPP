@@ -4,40 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:layout_editor_absoluteY="25dp">
 
 
     <TextView
-        android:id="@+id/txtViewSettings"
+        android:id="@+id/txtViewDatabaseInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="66dp"
         android:layout_marginTop="16dp"
-        android:text="SETTINGS"
+        android:text="Database Info"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:textColor="@android:color/holo_blue_bright"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCompanies"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnCleaningSettings"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="Cleaning"
-        app:layout_constraintBottom_toTopOf="@+id/btnManagementSettings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnManagementSettings"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="178dp"
-        android:text="Management"
+        android:id="@+id/btnCompanies"
+        android:layout_width="208dp"
+        android:layout_height="83dp"
+        android:layout_marginTop="48dp"
+        android:text="Companies"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtViewDatabaseInfo" />
+
+    <Button
+        android:id="@+id/btnProperties"
+        android:layout_width="208dp"
+        android:layout_height="83dp"
+        android:layout_marginTop="160dp"
+        android:text="Properties"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewDatabaseInfo" />
+
 
 </android.support.constraint.ConstraintLayout>
