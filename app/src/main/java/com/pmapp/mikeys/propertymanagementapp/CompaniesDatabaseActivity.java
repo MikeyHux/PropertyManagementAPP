@@ -28,6 +28,7 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
     Companies_Adapter cAdapter;
     CompaniesDatabaseHandler db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(getApplicationContext(), AddCompaniesActivity.class);
-                intent.putExtra("ADD", "ADD");
+                intent.putExtra("Command", "ADD");
                 startActivity(intent);
             }
         });
@@ -75,10 +76,12 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
 
             int CompanyID = companies_array_from_db.get(i).getID();
             String CompanyName = companies_array_from_db.get(i).getCompanyName();
+            String Services = companies_array_from_db.get(i).getServices();
 
             Companies companies = new Companies();
             companies.setID(CompanyID);
             companies.setCompanyName(CompanyName);
+            companies.setServices(Services);
 
 
             companies_data.add(companies);
@@ -115,6 +118,7 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
                 row = inflater.inflate(layoutResourceId, parent, false);
                 holder = new UserHolder();
                 holder.CompanyName = (TextView) row.findViewById(R.id.txtCompanyName);
+                holder.Services = (TextView) row.findViewById(R.id.txtServices);
                 holder.edit = (Button) row.findViewById(R.id.btn_update);
                 holder.delete = (Button) row.findViewById(R.id.btn_delete);
                 row.setTag(holder);
@@ -124,7 +128,8 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
             user = data.get(position);
             holder.edit.setTag(user.getID());
             holder.delete.setTag(user.getID());
-            holder.CompanyName.setText(user.getCompanyName());
+            holder.CompanyName.setText(user.getCompanyName() + " - " + user.getServices());
+           // holder.Services.setText("-" + user.getServices());
 
             holder.edit.setOnClickListener(new View.OnClickListener() {
 
@@ -135,7 +140,7 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
 
                     Intent update_company = new Intent(activity,
                             AddCompaniesActivity.class);
-                    update_company.putExtra("Edit", "Edit");
+                    update_company.putExtra("Command", "EDIT");
                     update_company.putExtra("COMPANY_ID", v.getTag().toString());
                     activity.startActivity(update_company);
 
@@ -183,9 +188,23 @@ public class CompaniesDatabaseActivity extends AppCompatActivity {
 
         class UserHolder {
             TextView CompanyName;
+            TextView Services;
             Button edit;
             Button delete;
         }
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // do stuff
+        //Toast.makeText(this, "Back Button is pressed!", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getApplicationContext(), DatabaseActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+
 
     }
 

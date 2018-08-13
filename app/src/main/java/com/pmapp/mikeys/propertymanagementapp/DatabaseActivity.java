@@ -24,6 +24,8 @@ public class DatabaseActivity  extends AppCompatActivity {
 
         Button btnProperties = (Button)findViewById(R.id.btnProperties);
 
+        Button btnCleaners = (Button)findViewById(R.id.btnCleaners);
+
         btnCompanies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +41,15 @@ public class DatabaseActivity  extends AppCompatActivity {
                 startActivity(new Intent(DatabaseActivity.this, PropertiesDatabaseActivity.class));
             }
         });
+
+        btnCleaners.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DatabaseActivity.this, "GO to Properties Database Activity!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(DatabaseActivity.this, CleanersDatabaseActivity.class));
+            }
+        });
+
 
 
 

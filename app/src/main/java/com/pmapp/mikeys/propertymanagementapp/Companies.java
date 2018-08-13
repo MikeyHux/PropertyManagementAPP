@@ -5,21 +5,25 @@ public class Companies {
     // private variables
     public int _id;
     public String _companyname;
+    public String _services;
 
     public Companies() {
     }
 
     // constructor
-    public Companies(int id, String CompanyName) {
+    public Companies(int id, String CompanyName, String Services ) {
         this._id = id;
         this._companyname = CompanyName;
+        this._services = Services;
 
     }
 
     // constructor
-    public Companies(String CompanyName) {
+    public Companies(String CompanyName,String Services) {
         this._companyname = CompanyName;
+        this._services = Services;
     }
+
 
     // getting ID
     public int getID() {
@@ -35,8 +39,12 @@ public class Companies {
     public String getCompanyName() {
         return this._companyname;
     }
+    public String getServices() {
+        return this._services;
+    }
 
     // setting name
     public void setCompanyName(String CompanyName) { this._companyname = CompanyName;}
+    public void setServices(String Services) { this._services = Services;}
 
 }

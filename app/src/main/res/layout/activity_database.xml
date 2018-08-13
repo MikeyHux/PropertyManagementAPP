@@ -44,5 +44,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewDatabaseInfo" />
 
+    <Button
+        android:id="@+id/btnCleaners"
+        android:layout_width="208dp"
+        android:layout_height="83dp"
+        android:layout_marginTop="276dp"
+        android:text="Cleaners"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewDatabaseInfo" />
+
 
 </android.support.constraint.ConstraintLayout>

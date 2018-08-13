@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.location.Address;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,28 +17,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class PropertiesDatabaseActivity extends AppCompatActivity {
+public class CleanersDatabaseActivity extends AppCompatActivity {
 
-    ListView Properties_listview;
-    ArrayList<Properties> properties_data = new ArrayList<Properties>();
-    Properties_Adapter pAdapter;
-    PropertiesDatabaseHandler db;
+    ListView Cleaners_listview;
+    ArrayList<Cleaners> cleaners_data = new ArrayList<Cleaners>();
+    Cleaners_Adapter pAdapter;
+    CleanersDatabaseHandler db;
 
-    List propertiesList = new ArrayList();
+    List cleanersList = new ArrayList();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_propertiesdatabase);
+        setContentView(R.layout.activity_cleanersdatabase);
 
         try {
-            Properties_listview = (ListView) findViewById(R.id.Propertieslist);
-            Properties_listview.setItemsCanFocus(false);
+            Cleaners_listview = (ListView) findViewById(R.id.Cleanerslist);
+            Cleaners_listview.setItemsCanFocus(false);
 
             RefreshData();
 
@@ -53,15 +48,15 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
 
 
 
-        Button add_btnProperties = (Button)findViewById(R.id.add_btnProperties);
-        add_btnProperties.setOnClickListener(new View.OnClickListener() {
+        Button add_btnCleaners = (Button)findViewById(R.id.add_btnCleaners);
+        add_btnCleaners.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // startActivity(new Intent(CompaniesDatabaseActivity.this, AddCompaniesActivity.class));
 
 
-                Intent intent = new Intent(getApplicationContext(), AddPropertiesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddCleanersActivity.class);
                 intent.putExtra("Command", "ADD");
                 startActivity(intent);
             }
@@ -73,47 +68,43 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
 
     public void RefreshData(){
 
-        properties_data.clear();
+        cleaners_data.clear();
 
-        db = new PropertiesDatabaseHandler(this);
+        db = new CleanersDatabaseHandler(this);
 
-        ArrayList<Properties> properties_array_from_db = db.Get_Properties();
-
-
+        ArrayList<Cleaners> cleaners_array = db.Get_Cleaners();
 
 
-        for (int i = 0; i < properties_array_from_db.size(); i++) {
 
-            int PropertyID = properties_array_from_db.get(i).getID();
-            String CompanyName = properties_array_from_db.get(i).getCompanyName();
-            String Services = properties_array_from_db.get(i).getServices();
-            String OwnerName = properties_array_from_db.get(i).getOwnerName();
-            String Address = properties_array_from_db.get(i).getAddress();
+
+        for (int i = 0; i < cleaners_array.size(); i++) {
+
+            int CleanerID = cleaners_array.get(i).getID();
+            String CleanerName = cleaners_array.get(i).getCleanerName();
+            String Address = cleaners_array.get(i).getAddress();
             //Address = Address.substring(0, Address.indexOf(' '));
-            String Email = properties_array_from_db.get(i).getEmail();
-            String Phone = properties_array_from_db.get(i).getPhone();
+            String Email = cleaners_array.get(i).getEmail();
+            String Phone = cleaners_array.get(i).getPhone();
 
-            Toast.makeText(this, "Address!" + Address, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Cleaners!" + Address, Toast.LENGTH_LONG).show();
 
 
-            Properties properties = new Properties();
-            properties.setID(PropertyID);
-            properties.setCompanyName(CompanyName);
-            properties.setServices(Services);
-            properties.setOwnerName(OwnerName);
-            properties.setAddress(Address);
-            properties.setEmail(Email);
-            properties.setPhone(Phone);
+            Cleaners cleaners = new Cleaners();
+            cleaners.setID(CleanerID);
+            cleaners.setCleanerName(CleanerName);
+            cleaners.setAddress(Address);
+            cleaners.setEmail(Email);
+            cleaners.setPhone(Phone);
 
-            properties_data.add(properties);
+            cleaners_data.add(cleaners);
 
 
         }
 
         db.close();
 
-        pAdapter = new Properties_Adapter(PropertiesDatabaseActivity.this, R.layout.listview_properties, properties_data);
-        Properties_listview.setAdapter(pAdapter);
+        pAdapter = new Cleaners_Adapter(CleanersDatabaseActivity.this, R.layout.listview_cleaners, cleaners_data);
+        Cleaners_listview.setAdapter(pAdapter);
 
     }
 
@@ -121,14 +112,14 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
 
 
 
-    public class Properties_Adapter extends ArrayAdapter<Properties> {
+    public class Cleaners_Adapter extends ArrayAdapter<Cleaners> {
         Activity activity;
         int layoutResourceId;
-        Properties user; //user
+        Cleaners user; //user
 
-        ArrayList<Properties> data = new ArrayList <Properties>();
+        ArrayList<Cleaners> data = new ArrayList <Cleaners>();
 
-        public Properties_Adapter(Activity act, int layoutResourceId, ArrayList<Properties> data) {
+        public Cleaners_Adapter(Activity act, int layoutResourceId, ArrayList<Cleaners> data) {
             super(act, layoutResourceId, data);
             this.layoutResourceId = layoutResourceId;
             this.activity = act;
@@ -144,10 +135,8 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(activity);
 
                 row = inflater.inflate(layoutResourceId, parent, false);
-                holder = new PropertiesDatabaseActivity.Properties_Adapter.UserHolder();
-                holder.CompanyName = (TextView) row.findViewById(R.id.txtCompanyName);
-                holder.Services = (TextView) row.findViewById(R.id.txtServices);
-                holder.OwnerName = (TextView) row.findViewById(R.id.txtOwnerName);
+                holder = new CleanersDatabaseActivity.Cleaners_Adapter.UserHolder();
+                holder.CleanerName = (TextView) row.findViewById(R.id.txtCleanerName);
                 holder.Address = (TextView) row.findViewById(R.id.txtAddress);
                 holder.Email = (TextView) row.findViewById(R.id.txtEmail);
                 holder.Phone = (TextView) row.findViewById(R.id.txtPhone);
@@ -160,10 +149,7 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
             user = data.get(position);
             holder.edit.setTag(user.getID());
             holder.delete.setTag(user.getID());
-            holder.CompanyName.setText(user.getCompanyName());
-            // holder.Services.setText("-" + user.getServices());
-            holder.Services.setText(user.getServices());
-            holder.OwnerName.setText(user.getOwnerName());
+            holder.CleanerName.setText(user.getCleanerName());
             holder.Address.setText(user.getAddress());
             holder.Email.setText(user.getEmail());
             holder.Phone.setText(user.getPhone());
@@ -175,10 +161,10 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
                     // TODO Auto-generated method stub
                     Log.i("Edit Button Clicked", "**********");
 
-                    Intent update_properties = new Intent(activity, AddPropertiesActivity.class);
-                    update_properties.putExtra("Command", "EDIT");
-                    update_properties.putExtra("PROPERTY_ID", v.getTag().toString());
-                    activity.startActivity(update_properties);
+                    Intent update_cleaners = new Intent(activity, AddCleanersActivity.class);
+                    update_cleaners.putExtra("Command", "EDIT");
+                    update_cleaners.putExtra("CLEANER_ID", v.getTag().toString());
+                    activity.startActivity(update_cleaners);
 
                 }
             });
@@ -193,7 +179,7 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
                     adb.setTitle("Delete?");
                     adb.setMessage("Are you sure you want to delete ");
-                    final int property_id = Integer.parseInt(v.getTag().toString());
+                    final int cleaner_id = Integer.parseInt(v.getTag().toString());
                     adb.setNegativeButton("Cancel", null);
                     adb.setPositiveButton("Ok",
                             new AlertDialog.OnClickListener() {
@@ -201,11 +187,11 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
 
-                                    Toast.makeText(PropertiesDatabaseActivity.this, "Property ID" + property_id, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(CleanersDatabaseActivity.this, "Cleaner ID" + cleaner_id, Toast.LENGTH_LONG).show();
                                     // MyDataObject.remove(positionToRemove);
-                                    PropertiesDatabaseHandler dBHandler = new PropertiesDatabaseHandler(
+                                    CleanersDatabaseHandler dBHandler = new CleanersDatabaseHandler(
                                             activity.getApplicationContext());
-                                    dBHandler.Delete_Properties(property_id);
+                                    dBHandler.Delete_Cleaners(cleaner_id);
 
                                     //CompaniesDatabaseActivity.this.onResume();
                                     //Refresh screen so when its deleted it shows an updated list
@@ -223,9 +209,7 @@ public class PropertiesDatabaseActivity extends AppCompatActivity {
         }
 
         class UserHolder {
-            TextView CompanyName;
-            TextView Services;
-            TextView OwnerName;
+            TextView CleanerName;
             TextView Address;
             TextView Email;
             TextView Phone;

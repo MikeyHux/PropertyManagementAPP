@@ -3,19 +3,37 @@ package com.pmapp.mikeys.propertymanagementapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class AddCompaniesActivity extends AppCompatActivity {
 
+    Boolean CompanyDoesExist;
+    String Services;
     String CompanyName;
+    String OnlyCleaning;
+    String ManagementCleaning;
     String CompanyNameExist;
     String Command = "";
+    String SelectedValue;
     EditText edtTextCompanyName;
+    RadioGroup rdGrpCleaningOrManagement;
+    RadioButton rdbtnManagementCleaning;
+    RadioButton rdbtnCleaning;
+    RadioButton rdbSelected;
+    Button btnAddCompanyName;
+    Button btnCancelCompanyName;
+    int selectedId;
+
+
     int COMPANY_ID;
 
     CompaniesDatabaseHandler CompdbHandler = new CompaniesDatabaseHandler(AddCompaniesActivity.this);
@@ -25,24 +43,49 @@ public class AddCompaniesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addcompanies);
 
-        edtTextCompanyName = (EditText)findViewById(R.id.edtTextCompanyName);
+        edtTextCompanyName = (EditText) findViewById(R.id.edtTextCompanyName);
         edtTextCompanyName.setText("");
-        Button btnAddCompanyName = (Button)findViewById(R.id.btnAddCompanyName);
-        Button btnCancelCompanyName = (Button)findViewById(R.id.btnCancelCompanyName);
-       // Toast.makeText(this, "Add Companies Database Activity!", Toast.LENGTH_LONG).show();
+         btnAddCompanyName = (Button) findViewById(R.id.btnAddCompanyName);
+         btnCancelCompanyName = (Button) findViewById(R.id.btnCancelCompanyName);
 
-        Command = getIntent().getStringExtra("Edit");
+        rdbtnManagementCleaning = (RadioButton) findViewById(R.id.rdbtnManagementCleaning);
+        rdbtnCleaning = (RadioButton) findViewById(R.id.rdbtnCleaning);
 
-        //Toast.makeText(this, "called from!: " + called_from , Toast.LENGTH_LONG).show();
-        //Toast.makeText(this, "Company ID!: " + Company_ID , Toast.LENGTH_LONG).show();
 
-        Toast.makeText(this, "Command!: " + Command , Toast.LENGTH_LONG).show();
 
-        if (Command != null){
-            String Company_ID = getIntent().getStringExtra("COMPANY_ID");
-            COMPANY_ID = Integer.parseInt(getIntent().getStringExtra("COMPANY_ID"));
-            Companies companies = CompdbHandler.Get_Companies(COMPANY_ID);
-            edtTextCompanyName.setText(companies.getCompanyName());
+        try {
+
+            Command = getIntent().getStringExtra("Command");
+
+            Toast.makeText(this, "called from!: " + Command, Toast.LENGTH_LONG).show();
+
+            if(Command.equals("EDIT")){
+
+                //String Company_ID = getIntent().getStringExtra("COMPANY_ID");
+                COMPANY_ID = Integer.parseInt(getIntent().getStringExtra("COMPANY_ID"));
+                Companies companies = CompdbHandler.Get_Companies(COMPANY_ID);
+                CompanyName = companies.getCompanyName();
+                edtTextCompanyName.setText(CompanyName);
+                Services = companies.getServices().trim();
+                btnAddCompanyName.setText("SAVE");
+
+                if(Services.equals("Management and Cleaning")){
+
+                    rdbtnManagementCleaning.setChecked(true);
+
+
+                } else {
+
+                    rdbtnCleaning.setChecked(true);
+
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.e("some error", "" + e);
 
         }
 
@@ -62,76 +105,107 @@ public class AddCompaniesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                CompanyDoesExist = false;
 
-                CompanyName = edtTextCompanyName.getText().toString();
+                CompanyName = edtTextCompanyName.getText().toString().trim();
+                rdGrpCleaningOrManagement = (RadioGroup) findViewById(R.id.rdGrpCleaningOrManagement);
+                selectedId = rdGrpCleaningOrManagement.getCheckedRadioButtonId();
+                rdbSelected = (RadioButton) findViewById(selectedId);
 
-                if(CompanyName.isEmpty()){
 
-                    Toast.makeText(AddCompaniesActivity.this, "Field is Empty - Please make sure its not empty!", Toast.LENGTH_LONG).show();
+
+                if (selectedId != -1 && Command.equals("ADD") && !CompanyName.isEmpty()) {
+
+                    //Toast.makeText(AddCompaniesActivity.this, "Command ADD!", Toast.LENGTH_LONG).show();
+
+                    Services = rdbSelected.getText().toString();
+
+
+                   // Toast.makeText(AddCompaniesActivity.this, "Services!" + Services, Toast.LENGTH_LONG).show();
+
+                    //AddCompany();
+
+                    CheckCompany();
+
+                    AddCompany();
+
+                   // Toast.makeText(AddCompaniesActivity.this, "CompanyDoesExist!" + CompanyDoesExist, Toast.LENGTH_LONG).show();
+
+
 
                 } else {
 
-                    AddCompany();
+                    if(Command.equals("EDIT")){
+
+                        Services = rdbSelected.getText().toString();
+                        CompdbHandler.Update_Companies(new Companies(COMPANY_ID, CompanyName, Services));
+                        CompdbHandler.close();
+
+                        Toast.makeText(AddCompaniesActivity.this, "Company UPDATED!", Toast.LENGTH_LONG).show();
+
+                        startActivity(new Intent(AddCompaniesActivity.this, CompaniesDatabaseActivity.class));
+
+
+
+                    } else {
+
+                        Toast.makeText(AddCompaniesActivity.this, "Company Name is Empty and/or Select Cleaning or Cleaning and Management - Please make sure its not empty!", Toast.LENGTH_LONG).show();
+
+                    }
+
+
 
                 }
 
             }
-
         });
 
-       }
+    }
 
-       public void AddCompany(){
 
-        CompanyName = CompanyName.trim();
+    public void CheckCompany(){
 
-        CheckCompany();
+        CompaniesDatabaseHandler db = new CompaniesDatabaseHandler(AddCompaniesActivity.this);
+        ArrayList<Companies> companies_array_from_db = db.Get_Companies();
+
+        for (int i = 0; i < companies_array_from_db.size(); i++) {
+
+        int CompID = companies_array_from_db.get(i).getID();
+        CompanyNameExist = companies_array_from_db.get(i).getCompanyName().trim();
 
         if(CompanyName.equals(CompanyNameExist)){
 
-            Toast.makeText(AddCompaniesActivity.this, "Company Name Exist - Please choose another company name!", Toast.LENGTH_LONG).show();
-
-            EditText edtTextCompanyName = (EditText)findViewById(R.id.edtTextCompanyName);
-            edtTextCompanyName.setText("");
-
-
-        } else {
-
-
-            if (Command != null){
-
-                CompdbHandler.Update_Companies(new Companies(COMPANY_ID, CompanyName));
-
-                CompdbHandler.close();
-
-
-            }else {
-
-                CompdbHandler.Add_Companies(new Companies(CompanyName));
-
-                Toast.makeText(AddCompaniesActivity.this, "Company Added!", Toast.LENGTH_LONG).show();
+            CompanyDoesExist = true;
 
             }
 
-            startActivity(new Intent(AddCompaniesActivity.this, CompaniesDatabaseActivity.class));
+        };
         }
 
-       }
+    public void AddCompany(){
 
-       public void CheckCompany(){
+        if(CompanyDoesExist.equals(false)){
 
-           CompaniesDatabaseHandler db = new CompaniesDatabaseHandler(this);
-           ArrayList<Companies> companies_array_from_db = db.Get_Companies();
+            CompdbHandler.Add_Companies(new Companies(CompanyName, Services));
 
-           for (int i = 0; i < companies_array_from_db.size(); i++) {
+            //  CompanyName = CompanyName + " - " + Services;
 
-               int CompID = companies_array_from_db.get(i).getID();
-               CompanyNameExist = companies_array_from_db.get(i).getCompanyName();
+            Toast.makeText(AddCompaniesActivity.this, "Company Added!", Toast.LENGTH_LONG).show();
+
+            startActivity(new Intent(AddCompaniesActivity.this, CompaniesDatabaseActivity.class));
+
+        } else {
+
+            Toast.makeText(AddCompaniesActivity.this, "Company EXIST!", Toast.LENGTH_LONG).show();
+            edtTextCompanyName.setText("");
 
 
 
-           }
-
-       }
+        }
 
     }
+
+    }
+
+
+

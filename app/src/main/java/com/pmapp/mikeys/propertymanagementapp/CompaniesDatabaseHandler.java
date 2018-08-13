@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
 
@@ -25,6 +26,7 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_COMPANYNAME = "company_name";
+    private static final String KEY_SERVICES = "services";
 
     private final ArrayList<Companies> companies_list = new ArrayList<Companies>();
 
@@ -36,7 +38,7 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_COMPANIES_TABLE = "CREATE TABLE " + TABLE_COMPANIES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_COMPANYNAME + " TEXT," + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_COMPANYNAME + " TEXT," + KEY_SERVICES + ")";
         db.execSQL(CREATE_COMPANIES_TABLE);
     }
 
@@ -59,6 +61,7 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_COMPANYNAME, companies.getCompanyName()); // Contact Name
+        values.put(KEY_SERVICES, companies.getServices());
 
         // Inserting Row
         db.insert(TABLE_COMPANIES, null, values);
@@ -70,13 +73,13 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_COMPANIES, new String[] { KEY_ID,
-                        KEY_COMPANYNAME}, KEY_ID + "=?",
+                        KEY_COMPANYNAME, KEY_SERVICES}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Companies companies = new Companies(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1));
+                cursor.getString(1), cursor.getString(2));
         // return contact
         cursor.close();
         db.close();
@@ -84,23 +87,60 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
         return companies;
     }
 
+    //Get all companies from List
+    public List<String> getAllCompanies(){
+
+        List<String> companies = new ArrayList<String>();
+
+        // Select All Query
+       // String selectQuery = "SELECT * FROM " + TABLE_COMPANIES +" ORDER BY " + KEY_COMPANYNAME + " ASC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMPANIES +" ORDER BY " + KEY_COMPANYNAME + " ASC",null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                companies.add((cursor.getString(1)) + " - " + (cursor.getString(2)) );
+            } while (cursor.moveToNext());
+        }
+
+        // closing connection
+        cursor.close();
+        db.close();
+
+        // returning lables
+        return companies;
+    }
+
+
     // Getting All Contacts
     public ArrayList<Companies> Get_Companies() {
         try {
             companies_list.clear();
 
             // Select All Query
-            String selectQuery = "SELECT  * FROM " + TABLE_COMPANIES;
+           // String selectQuery = "SELECT  * FROM " + TABLE_COMPANIES;
+
+           // String selectQuery = (TABLE_COMPANIES, KEY_COMPANYNAME, null, null, null, null, KEY_COMPANYNAME +" DESC");
+
+
 
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
+           // Cursor cursor = db.rawQuery(selectQuery, null);
 
+
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMPANIES +" ORDER BY " + KEY_COMPANYNAME + " ASC",null);
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
                     Companies companies = new Companies();
                     companies.setID(Integer.parseInt(cursor.getString(0)));
                     companies.setCompanyName(cursor.getString(1));
+                    companies.setServices(cursor.getString(2));
+
 
                     // Adding contact to list
                     companies_list.add(companies);
@@ -125,6 +165,7 @@ public class CompaniesDatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_COMPANYNAME, companies.getCompanyName());
+        values.put(KEY_SERVICES, companies.getServices());
 
 
         // updating row

@@ -7,11 +7,11 @@
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
-        android:id="@+id/txtViewProperties"
+        android:id="@+id/txtViewCleaners"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Properties"
+        android:text="Cleaners"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:textColor="@android:color/holo_blue_bright"
         android:textSize="30dp"
@@ -20,29 +20,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_btnProperties"
+        android:id="@+id/add_btnCleaners"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:layout_weight="1"
         android:background="#000000"
         android:focusable="false"
-        android:text="Add Properties"
+        android:text="Add Cleaner"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewProperties" />
+        app:layout_constraintTop_toBottomOf="@+id/txtViewCleaners" />
 
 
     <ListView
-        android:id="@+id/Propertieslist"
+        android:id="@+id/Cleanerslist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:focusable="false"
         android:focusableInTouchMode="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_btnProperties" />
+        app:layout_constraintTop_toBottomOf="@+id/add_btnCleaners" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
 
     <TextView
         android:id="@+id/txtViewAddCompanies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="53dp"
         android:layout_marginTop="16dp"
         android:text="Add Companies"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:textColor="@android:color/holo_blue_bright"
         android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCompanyName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,52 +25,93 @@
         android:id="@+id/textViewCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="2dp"
         android:text="Company Name:"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edtTextCompanyName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/edtTextCompanyName"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewAddCompanies" />
 
     <EditText
         android:id="@+id/edtTextCompanyName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
         android:layout_marginEnd="14dp"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="142dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/rdGrpCleaningOrManagement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCompanyName" />
 
     <Button
         android:id="@+id/btnAddCompanyName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="59dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="66dp"
         android:layout_marginStart="60dp"
         android:text="SAVE"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCancelCompanyName"
         app:layout_constraintEnd_toStartOf="@+id/btnCancelCompanyName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnCancelCompanyName" />
 
     <Button
         android:id="@+id/btnCancelCompanyName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="74dp"
         android:text="Cancel"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnAddCompanyName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnAddCompanyName" />
+        app:layout_constraintStart_toEndOf="@+id/btnAddCompanyName"
+        app:layout_constraintTop_toBottomOf="@+id/rdGrpCleaningOrManagement" />
+
+    <RadioGroup
+        android:id="@+id/rdGrpCleaningOrManagement"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="119dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelCompanyName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtTextCompanyName">
+
+        <RadioButton
+            android:id="@+id/rdbtnCleaning"
+            android:layout_width="164dp"
+            android:layout_height="59dp"
+            android:baselineAligned="false"
+            android:text="Only Cleaning"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="262dp"
+            tools:layout_editor_absoluteY="218dp" />
+
+        <RadioButton
+            android:id="@+id/rdbtnManagementCleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:text="Management and Cleaning"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="218dp" />
+
+
+    </RadioGroup>
+
 
 </android.support.constraint.ConstraintLayout>
